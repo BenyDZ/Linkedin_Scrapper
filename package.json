@@ -1,0 +1,20 @@
+{
+  "name": "linkedin_scrapper",
+  "version": "1.0.0",
+  "description": "Scraping datas on linkedin",
+  "license": "MIT",
+  "repository": "BenyDZ/linkedin_scrapper",
+  "main": "person.js",
+  "keywords": [
+    "linkedin_scrapper",
+    "linkedin",
+    "npm",
+    "package",
+    "Beny DZIENGUE"
+  ],
+  "dependencies": {
+    "puppeteer": "^13.0.1",
+    "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.1.0"
+  }
+}
