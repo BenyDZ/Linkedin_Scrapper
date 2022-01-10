@@ -12,9 +12,16 @@ class Account{
         const browser = await puppeteer.launch({headless: false})
         //initialize the new page
         const page = await browser.newPage()
-
-        // Configure the navigation timeout
-        await page.setDefaultNavigationTimeout(0);
+        //force the browser to not load images and css
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+        if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image'){
+        req.abort();
+        }
+        else {
+        req.continue();
+        }
+        });
 
         await page.goto("https://www.linkedin.com/login/",  {waitUntil:'load', timeout: 0})
 
@@ -25,16 +32,13 @@ class Account{
         //fill the password field
         page.type("#password", this.pwd)
         //wait 5 secondes
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         //click the button and wait for the new page to load
         await Promise.all([page.click(".btn__primary--large"), page.waitForNavigation()])
         
-        return [browser, page]
+        return page
     }
 }
 
 module.exports = Account
-
-const acc = new Account("patdenzoungany@gmail.com", "Bermanpatnew18")
-acc.connected()
